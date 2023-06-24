@@ -1,0 +1,16 @@
+C:\Users\SELEN\source\repos\compiler\bin\Debug\compiler.exe.config
+C:\Users\SELEN\source\repos\compiler\bin\Debug\compiler.exe
+C:\Users\SELEN\source\repos\compiler\bin\Debug\compiler.pdb
+C:\Users\SELEN\source\repos\compiler\obj\Debug\compiler.csproj.AssemblyReference.cache
+C:\Users\SELEN\source\repos\compiler\obj\Debug\compiler.csproj.SuggestedBindingRedirects.cache
+C:\Users\SELEN\source\repos\compiler\obj\Debug\compiler.csproj.CoreCompileInputs.cache
+C:\Users\SELEN\source\repos\compiler\obj\Debug\compiler.exe
+C:\Users\SELEN\source\repos\compiler\obj\Debug\compiler.pdb
+C:\Users\SELEN\source\repos\CompilerDesign-master\bin\Debug\compiler.exe.config
+C:\Users\SELEN\source\repos\CompilerDesign-master\bin\Debug\compiler.exe
+C:\Users\SELEN\source\repos\CompilerDesign-master\bin\Debug\compiler.pdb
+C:\Users\SELEN\source\repos\CompilerDesign-master\obj\Debug\compiler.csproj.AssemblyReference.cache
+C:\Users\SELEN\source\repos\CompilerDesign-master\obj\Debug\compiler.csproj.SuggestedBindingRedirects.cache
+C:\Users\SELEN\source\repos\CompilerDesign-master\obj\Debug\compiler.csproj.CoreCompileInputs.cache
+C:\Users\SELEN\source\repos\CompilerDesign-master\obj\Debug\compiler.exe
+C:\Users\SELEN\source\repos\CompilerDesign-master\obj\Debug\compiler.pdb
