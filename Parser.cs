@@ -147,26 +147,7 @@ namespace compiler
         //Karşılaştırma operatörüne bağlı olarak, karşılaştırma sonucu true veya false olarak döndürülür.
 
 
-        //private bool EvaluateCondition(int leftValue, TokenType comparisonOperator, int rightValue)
-        //{
-        //    switch (comparisonOperator)
-        //    {
-        //        case TokenType.LessThan:
-        //            return leftValue < rightValue;
-        //        case TokenType.GreaterThan:
-        //            return leftValue > rightValue;
-        //        case TokenType.LessThanOrEqual:
-        //            return leftValue <= rightValue;
-        //        case TokenType.GreaterThanOrEqual:
-        //            return leftValue >= rightValue;
-        //        case TokenType.Equal:
-        //            return leftValue == rightValue;
-        //        case TokenType.NotEqual:
-        //            return leftValue != rightValue;
-        //        default:
-        //            throw new Exception("Invalid comparison operator");
-        //    }
-        //}
+
 
 
 
@@ -229,123 +210,71 @@ namespace compiler
 
 
 
-        //private int ApplyBinaryOperation(int leftValue, string operatorType, int rightValue)
-        //{
-        //    switch (operatorType)
-        //    {
-        //        case "+":
-        //            return leftValue + rightValue;
-        //        case "-":
-        //            return leftValue - rightValue;
-        //        case "*":
-        //            return leftValue * rightValue;
-        //        case "/":
-        //            return leftValue / rightValue;
-        //        case "%":
-        //            return leftValue % rightValue;
-        //        default:
-        //            throw new Exception("Invalid operator: " + operatorType);
-        //    }
-        //} 
+        private int ApplyBinaryOperation(int leftvalue, string operatortype, int rightvalue)
+        {
+            switch (operatortype)
+            {
+                case "+":
+                    return leftvalue + rightvalue;
+                case "-":
+                    return leftvalue - rightvalue;
+                case "*":
+                    return leftvalue * rightvalue;
+                case "/":
+                    return leftvalue / rightvalue;
+                case "%":
+                    return leftvalue % rightvalue;
+                default:
+                    throw new Exception("ınvalid operator: " + operatortype);
+            }
+        }
 
 
-
-
-
-
-
-
-        //private void ParseForLoop()
-        //{
-        //    Eat(TokenType.For);//"for" anahtar kelimesi
-
-        //    Eat(TokenType.LeftParen);//döngünün başlangıcını belirtir.
-
-        //    // Döngü değişkeni
-        //    string variableName = Eat(TokenType.Identifier).Value;
-
-        //    Eat(TokenType.Assign);
-
-        //    // Döngü başlangıç değeri
-        //    int startValue = ParseExpression();
-
-        //    Eat(TokenType.Semicolon);
-
-        //    // Döngü bitiş koşulu
-        //    bool condition = ParseCondition();
-
-        //    Eat(TokenType.Semicolon);
-
-        //    // Döngü adımı
-        //    string stepOperation = Eat(TokenType.Identifier).Value;
-
-        //    Eat(TokenType.Assign);
-
-        //    int stepValue = ParseExpression();
-
-        //    Eat(TokenType.RightParen);
-
-        //    // Döngü gövdesi
-        //    Eat(TokenType.LeftBrace);
-
-        //    while (condition)
-        //    {
-        //        // Döngü değişkenini güncelle
-        //        variables[variableName] = startValue;
-
-        //        // Döngü gövdesini derle
-        //        ParseStatement();
-
-        //        // Döngü adımını uygula
-        //        int result = ApplyBinaryOperation(variables[variableName], stepOperation, stepValue);
-        //        variables[variableName] = result;
-
-        //        // Döngü koşulunu kontrol et
-        //        condition = EvaluateCondition(variables[variableName], TokenType.LessThanOrEqual, startValue);
-        //    }
-
-        //    Eat(TokenType.RightBrace);
-        //}
-
-
-
-
+        private bool EvaluateCondition(int leftValue, string ComparisonOperator, int rightValue)
+        {
+            switch (ComparisonOperator)
+            {
+                case "<":
+                    return leftValue < rightValue;
+                case ">":
+                    return leftValue > rightValue;
+                case "<=":
+                    return leftValue <= rightValue;
+                case ">=":
+                    return leftValue >= rightValue;
+                case "==":
+                    return leftValue == rightValue;
+                case "!=":
+                    return leftValue != rightValue;
+                default:
+                    throw new Exception("Invalid comparison operator");
+            }
+        }
         public void ParseForLoop()
         {
-
-          
             // "for" anahtar kelimesini kontrol et
-            Token token = currentToken; // Değişiklik: lexer.GetNextToken() -> GetNextToken()
+            Token token = currentToken;
             if (token.Type != TokenType.Identifier || token.Value != "for")
             {
                 throw new Exception("Syntax Error: 'for' keyword expected.");
             }
-            token = currentToken;
+
+            token = lexer.GetNextToken();
 
             // "(" parantezini kontrol et
-
             if (token.Type != TokenType.LeftParen)
             {
                 throw new Exception("Syntax Error: '(' expected.");
             }
 
-
-
-            //token = currentToken;
-            //if (token.Type != TokenType.dataType || token.Value != "int")
-            //{
-            //    throw new Exception("Syntax Error: 'int' keyword expected.");
-            //}
-
-
-
             // İlk atama ifadesini işle
-
             if (token.Type != TokenType.Identifier)
             {
                 throw new Exception("Syntax Error: Variable name expected.");
             }
-            
+            string variableName = token.Value;
+
+            token =lexer.GetNextToken();
 
             if (token.Type != TokenType.Assign)
             {
@@ -353,90 +282,118 @@ namespace compiler
             }
 
             // Başlangıç değerini işle
-
+            token = lexer.GetNextToken();
             if (token.Type != TokenType.Number)
             {
                 throw new Exception("Syntax Error: Numeric value expected.");
             }
-          
+            int startValue = int.Parse(token.Value);
 
             // ";" noktalı virgülü kontrol et
-
+            token = lexer.GetNextToken();
             if (token.Type != TokenType.Semicolon)
             {
                 throw new Exception("Syntax Error: ';' expected.");
             }
 
             // Koşul ifadesini işle
-
+            token = lexer.GetNextToken();
             if (token.Type != TokenType.Identifier)
             {
                 throw new Exception("Syntax Error: Variable name expected.");
             }
-          
+            string conditionVariable = token.Value;
 
+            token = lexer.GetNextToken();
             if (token.Type != TokenType.LessThan && token.Type != TokenType.LessThanOrEqual && token.Type != TokenType.GreaterThan && token.Type != TokenType.GreaterThanOrEqual)
             {
                 throw new Exception("Syntax Error: Comparison operator expected.");
             }
-            //string comparisonOperator = token.Value;
+            string ComparisonOperator = token.Value;
 
-
+            token = lexer.GetNextToken();
             if (token.Type != TokenType.Number)
             {
                 throw new Exception("Syntax Error: Numeric value expected.");
             }
-           
+            int conditionValue = int.Parse(token.Value);
 
             // ";" noktalı virgülü kontrol et
-
+            token = lexer.GetNextToken();
             if (token.Type != TokenType.Semicolon)
             {
                 throw new Exception("Syntax Error: ';' expected.");
             }
 
             // Artış ifadesini işle
+            token = lexer.GetNextToken();
             if (token.Type != TokenType.Identifier)
             {
                 throw new Exception("Syntax Error: Variable name expected.");
             }
-            //string incrementVariable = token.Value;
+            string incrementVariable = token.Value;
 
+            token = lexer.GetNextToken();
             if (token.Type != TokenType.Assign)
             {
                 throw new Exception("Syntax Error: '=' expected.");
             }
 
             // Artış değerini işle
+            token = lexer.GetNextToken();
             if (token.Type != TokenType.Number)
             {
                 throw new Exception("Syntax Error: Numeric value expected.");
             }
-            //int incrementValue = int.Parse(token.Value);
+            int incrementValue = int.Parse(token.Value);
 
             // ")" parantezini kontrol et
+            token = lexer.GetNextToken();
             if (token.Type != TokenType.RightParen)
             {
                 throw new Exception("Syntax Error: ')' expected.");
             }
 
             // "{" süslü parantezi kontrol et
+            token = lexer.GetNextToken();
             if (token.Type != TokenType.LeftBrace)
             {
                 throw new Exception("Syntax Error: '{' expected.");
             }
-
+         
             // For döngüsü içerisindeki ifadeleri işle
-            // Burada for döngüsünün içeriğini nasıl işleyeceğiniz size bağlıdır.
+            int iterationCount = 0;
+            while (EvaluateCondition(variables[conditionVariable], ComparisonOperator, conditionValue))
+            {
+                // Döngü değişkenini güncelle
+                variables[variableName] = startValue;
+
+                // Döngü gövdesini derle
+                ParseStatement();
+
+                // Döngü adımını uygula
+                int result = ApplyBinaryOperation(variables[incrementVariable], "+", incrementValue);
+                variables[incrementVariable] = result;
+
+                iterationCount++;
+
+                // Sınırsız döngüleri engellemek için maksimum 1000 iterasyon sınırı belirle
+                if (iterationCount > 1000)
+                {
+                    throw new Exception("Error: Maximum iteration count exceeded.");
+                }
+            }
 
             // "}" süslü parantezi kontrol et
+            token = lexer.GetNextToken();
             if (token.Type != TokenType.RightBrace)
             {
                 throw new Exception("Syntax Error: '}' expected.");
             }
         }
 
-      
+
+
 
 
 
